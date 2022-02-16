@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+     <head>
+        <meta charset="UTF-8">  
+        <title>Leaflet practice</title>
+     <!-- leaflet css file -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+   <!--leaflet javascript file-->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+          integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+          crossorigin=""></script>
+       
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+       <style>
+
+         #map { height: 600px;
+        width: 700px;
+    
+    }
+       </style> 
+
+      <!--OverLappingMarkerSpiderfier-->
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
+
+       <!--MarkerCluster-->
+       <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
+       <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
+       <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+       
+
+     </head>
+     <body>
+         <div>
+        <form name="s-form" method="post">
+            <p>Select date: <input type="date" id="singledate" name="single" required ></p>
+            <input type="submit" value="Submit">
+          </form>
+        </div>
+        ddddddddd= {{ api_s }}
+        <hr>
+
+        <div>
+          <form name="stend" method="post">
+            <p>Start Date: <input type="date" id="Sdate" name="startdate"></p>
+            <p>End Date: <input type="date" id="Edate" name="enddate"> </p>
+            <input type="submit" value="Submit">
+          </form> 
+        </div>
+        ddddddddd= {{ api_r}}
+        <div id="map"></div>
+        <script>
+
+var map = L.map('map').setView([51.0447, -114.0719], 13);
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 10,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoiYXNpYWh6aWJyaWxhIiwiYSI6ImNremtycDhtZDFjNDYyd3M4empvM3Y4dGsifQ.ld0rWyn00rGQJ16mQBp0FQ'
+    }).addTo(map);
+
+
+    '{% if api_s %}'
+        var api_url='{{ api_s }}'
+    '{% endif %}'
+
+    '{% if api_r %}'
+        var api_url='{{ api_r }}'
+    '{% endif %}'
+
+
+    if (api_url) {
+        var data;            
+        $.ajax({
+            url: api_url,
+            type: "GET",
+            data: {
+            "$$app_token" : "BFe3BUcbDW8Wari2taan3sOuq"
+        }
+        }).done(function(data) {
+
+  //console.log(data);
+        //Marker cluster 
+        var markers = L.markerClusterGroup();
+
+        for (let x in data.features) {
+          var popuptext = "<b>issueddate: </b>"+ data.features[x].properties.issueddate +"<br>"
+                        + "<b>workclassgroup: </b>"+ data.features[x].properties.workclassgroup +"<br>"
+                        + "<b>contractorname: </b>"+ data.features[x].properties.contractorname +"<br>"
+                        + "<b>communityname: </b>"+ data.features[x].properties.communityname +"<br>"
+                        + "<b>originaladdress: </b>"+ data.features[x].properties.originaladdress +"<br>";
+            //console.log(data.features[x]);
+
+            var feature = data.features[x]
+
+            L.geoJSON(feature, {
+                pointToLayer: function (feature, latlng) {
+                  return markers.addLayer(L.marker(latlng).bindPopup(popuptext).openPopup()) ;
+        }
+            }).addTo(map); 
+            map.addLayer(markers);
+
+
+        }
+
+});
+
+}
+
+        </script>
+        
+
+    </body>
+        
+</html>
+ 
