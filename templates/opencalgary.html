@@ -1,8 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
      <head>
-        <meta charset="UTF-8">  
-        <title>Leaflet practice</title>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Building permits in Calgary</title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      
+
      <!-- leaflet css file -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -13,12 +22,39 @@
           crossorigin=""></script>
        
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+       <!--style sheet
+       <link rel="stylesheet" href="C:\Users\zibri\LABS_651\project2\proj2\calgary\templates\navistyle.css"/>
+      -->
        <style>
 
          #map { height: 600px;
         width: 700px;
     
     }
+
+    .topnav {
+    overflow: hidden;
+    background-color:rgb(250, 236, 37);
+  }
+  
+  .topnav a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: white;
+  }
+  
+  .topnav a.active {
+    background-color: #e6e5ec;
+    color: black;
+  }
        </style> 
 
       <!--OverLappingMarkerSpiderfier-->
@@ -31,27 +67,51 @@
        
 
      </head>
+
+     <nav class="navbar navbar-dark navbar-expand-sm topnav">
+      <div class="container">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      <div class="collapse navbar-collapse" id="Navbar">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active"><a class="nav-link" href="opencalgary.html"><span class="fa fa-home fa-lg"></span> Home</a></li>
+        </ul>
+      </div>
+
+      </div>
+    </nav>
+
      <body>
-         <div>
-        <form name="s-form" method="post">
+
+      <div class = "container">
+        <hr>
+        <div>
+          <form name="s-form" method="post">
             <p>Select date: <input type="date" id="singledate" name="single" required ></p>
             <input type="submit" value="Submit">
           </form>
         </div>
+        {#
         ddddddddd= {{ api_s }}
+        #}
         <hr>
 
         <div>
           <form name="stend" method="post">
             <p>Start Date: <input type="date" id="Sdate" name="startdate"></p>
-            <p>End Date: <input type="date" id="Edate" name="enddate"> </p>
+            <p>End Date: <input type="date" id="Edate" name="enddate"></p>
             <input type="submit" value="Submit">
           </form> 
         </div>
+        <hr>
+        {#
         ddddddddd= {{ api_r}}
+        #}
         <div id="map"></div>
+      </div>  
+      <hr>
         <script>
-
 var map = L.map('map').setView([51.0447, -114.0719], 13);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -112,8 +172,12 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
         </script>
         
-
-    </body>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     
+</body>
         
 </html>
  
